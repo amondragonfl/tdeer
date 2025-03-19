@@ -30,7 +30,7 @@ def predict_tdee(weights, calorie_intakes):
     """
 
     weights_diffs = np.diff(weights)
-    X = calorie_intakes[1:].reshape(-1, 1) 
+    X = calorie_intakes[:-1].reshape(-1, 1) 
     y = weights_diffs  
 
     envelope = EllipticEnvelope()
