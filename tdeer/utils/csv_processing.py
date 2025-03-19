@@ -94,23 +94,32 @@ def validate_csv(file_path):
 def read_csv_as_numpy(file_path):
     """
     Reads a CSV file and returns two numpy arrays representing the data.
-
-    This function assumes that the CSV file contains two columns where:
-    - The first column is assigned to weight.
-    - The second column is assigned to calories.
     
-    The first row of the CSV is skipped as it is assumed to be a header.
+    This function finds the `weight` and `calories` columns regardless of their order
+    in the CSV file. The first row of the CSV is assumed to be a header.
 
     Args:
         file_path (str): The path to the CSV file.
 
     Returns:
         tuple: A tuple containing two numpy arrays:
-            - X: A numpy array representing the data from the first column.
-            - Y: A numpy array representing the data from the second column.
-    """
+            - weight: A numpy array representing the data from the `weight` column.
+            - calories: A numpy array representing the data from the `calories` column.
+    """ 
+    with open_csv(file_path) as file:
+        csv_reader = csv.reader(file)
+        header = next(csv_reader)
+        try:
+            weight_index = header.index('weight')
+            calories_index = header.index('calories')
+        except ValueError as e:
+            print(f"Error: Missing required column(s): {e}")
+            return None, None
+        
     data = np.genfromtxt(file_path, delimiter=',', skip_header=1)
-    weight = data[:, 0]  
-    calories = data[:, 1] 
+
+    weight = data[:, weight_index]
+    calories = data[:, calories_index]
+    
     return weight, calories
 
