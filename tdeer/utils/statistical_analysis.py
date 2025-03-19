@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.covariance import EllipticEnvelope
 
-def predict_tdee(weights, calorie_intakes):
+def predict_tdee_with_linear_regression(weights, calorie_intakes):
     """
     Predict the calorie intake required for a 0 weight change (i.e., when no weight is gained or lost) 
     based on daily calorie intake and weight changes using linear regression.
