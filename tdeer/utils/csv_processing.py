@@ -40,7 +40,7 @@ def file_exists(file_path):
     """
     return os.path.isfile(file_path)
 
-def validate_csv(file_path):
+def validate_csv(file_path, steps=False):
     """
     Validate a CSV file by checking:
     - File exists
@@ -68,7 +68,10 @@ def validate_csv(file_path):
             if 'weight' not in header or 'calories' not in header:
                 print(f"File '{file_path}' does not have 'weight' and 'calories' columns.")
                 return False
-            # Check if data follows the structure (weight, calories)
+            if steps and 'steps' not in header:
+                print(f"File '{file_path}' does not have 'steps' column and steps option was selected.")
+                return False
+            
             for row in reader:
                 if len(row) < 2:
                     print(f"File '{file_path}' has rows with missing data.")
@@ -76,6 +79,9 @@ def validate_csv(file_path):
                 try:
                     weight_index = header.index('weight')
                     calories_index = header.index('calories')
+                    if steps:
+                        steps_index=header.index('steps')
+                        float(row[steps_index])  
                     float(row[weight_index])  
                     float(row[calories_index]) 
                 except ValueError:
