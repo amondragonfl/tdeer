@@ -9,4 +9,8 @@ setup(
             'tdeer = tdeer.main:main', 
         ],
     },
+    install_requires=[
+        'numpy',  
+        'scikit-learn',  
+    ],
 )
